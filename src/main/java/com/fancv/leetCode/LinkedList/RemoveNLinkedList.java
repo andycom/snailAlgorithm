@@ -14,7 +14,7 @@ public class RemoveNLinkedList {
         ListNode d = new ListNode(4, c);
         ListNode e = new ListNode(5, d);
 
-        removeNthFromEnd(e, 2);
+        removeNthFromEnd(e, 5);
         System.out.println("结束");
     }
 
@@ -27,17 +27,27 @@ public class RemoveNLinkedList {
             sail = sail.next;
 
         }
-        int s = 1;
-        sail.next = head;
-        while (sail.next != null) {
+        if (size == 1 & n == 1) {
+            head = null;
+            return head;
+        }
+        if (size == n) {
+            head = head.next;
+            return head;
+        }
+        int s = 0;
+        ListNode sail2 = new ListNode();
+        sail2.next = head;
+
+        while (sail2.next != null) {
             ListNode t = new ListNode();
-            t = sail;
-            sail = sail.next;
-            if (s == size + 1 - n) {
-                t.next = sail.next.next;
+            t = sail2;
+            sail2 = sail2.next;
+            if (s == size - n) {
+                t.next = sail2.next;
                 break;
             }
-            s++;
+            s = s + 1;
 
         }
         return head;
