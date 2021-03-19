@@ -8,7 +8,7 @@ package com.fancv.dataStructure;
 public class LinkedListTest {
     public static void main(String[] args) {
 
-        LinkedList lls = new LinkedList();
+      /*  LinkedList lls = new LinkedList();
 
         System.out.println(lls.getHead());
 
@@ -20,15 +20,49 @@ public class LinkedListTest {
             lls.insertData(Integer.valueOf(i).toString());
         }
 
-        Object del=lls.getHead();
+        Object del = lls.getHead();
 
         lls.deleteData(del);
 
-        System.out.println(lls.getHead());
+        System.out.println(lls.getHead());*/
 
 
+        /**
+         * 链表翻转
+         */
+
+        Node a = new Node("A", 1, null);
+        Node b = new Node("B", 2, a);
+        Node c = new Node("C", 3, b);
+        Node d = new Node("D", 4, c);
 
 
+       /* Node sail = new Node("sail", 0, null);
+        sail.setNext(d);
+        while (sail.hasNext()) {
+            System.out.print(sail.getNext().getData());
+            sail = sail.getNext();
+        }
+        System.out.println("");*/
+        System.out.println("接下来开始翻转链表");
 
+        Node fake = new Node("fake", 0, null);
+        Node sail = new Node("sail", 0, d);
+        while (sail.hasNext()) {
+            Node temp = sail.getNext();
+            sail.setNext(sail.getNext().getNext());
+            if (fake.hasNext()) {
+                temp.setNext(fake.getNext());
+                fake.setNext(temp);
+            } else {
+                fake.setNext(temp);
+                temp.setNext(null);
+            }
+        }
+
+        while (fake.hasNext()) {
+            System.out.println(fake.getNext().getData());
+            fake = fake.getNext();
+        }
     }
 }

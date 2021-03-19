@@ -42,6 +42,20 @@ public class LinkedList {
     }
 
     /**
+     * 获取头节点
+     *
+     * @return
+     */
+    public Node getHeadNode() {
+        if (null == head) {
+            return null;
+        } else {
+            return head;
+        }
+
+    }
+
+    /**
      * 增加节点
      */
     public boolean insertData(Object data) {
@@ -49,7 +63,7 @@ public class LinkedList {
         if (isEmpty()) {
             head = new Node("first", data, null);
         } else {
-            Node temp=head;
+            Node temp = head;
             while (temp.hasNext()) {
                 temp = temp.getNext();
             }
