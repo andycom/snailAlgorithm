@@ -45,7 +45,9 @@ public class LinkedListTest {
         }
         System.out.println("");*/
         System.out.println("接下来开始翻转链表");
-
+/**
+ * 借用三节点翻转链表
+ */
         Node fake = new Node("fake", 0, null);
         Node sail = new Node("sail", 0, d);
         while (sail.hasNext()) {
