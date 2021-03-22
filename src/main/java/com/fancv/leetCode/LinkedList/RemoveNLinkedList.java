@@ -8,14 +8,16 @@ package com.fancv.leetCode.LinkedList;
 public class RemoveNLinkedList {
 
     public static void main(String[] args) {
-        ListNode a = new ListNode(1, null);
-        ListNode b = new ListNode(2, a);
-        ListNode c = new ListNode(3, b);
-        ListNode d = new ListNode(4, c);
-        ListNode e = new ListNode(5, d);
+        ListNode a = new ListNode(9, null);
+        ListNode b = new ListNode(9, a);
+        ListNode c = new ListNode(9, null);
+        ListNode d = new ListNode(9, c);
+        ListNode e = new ListNode(9, d);
 
-        removeNthFromEnd(e, 5);
-        System.out.println("结束");
+        /*removeNthFromEnd(e, 5);
+        System.out.println("结束");*/
+
+        addTwoNumbers(e, b);
     }
 
     public static ListNode removeNthFromEnd(ListNode head, int n) {
@@ -53,7 +55,67 @@ public class RemoveNLinkedList {
         return head;
     }
 
+    /**
+     * 2. 两数相加 链表相加
+     *
+     * @param l1
+     * @param l2
+     * @return
+     */
+    static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+
+        ListNode s1 = new ListNode(0, l1);
+        ListNode s2 = new ListNode(0, l2);
+
+        int a = 0;
+        while (s1.next != null) {
+            s1.next = s1.next.next;
+            a++;
+        }
+        int b = 0;
+        while (s2.next != null) {
+            s2.next = s2.next.next;
+            b++;
+        }
+        ListNode result = new ListNode();
+        if (a >= b) {
+            s1 = new ListNode(0, l1);
+            s2 = new ListNode(0, l2);
+        } else {
+            s1 = new ListNode(0, l2);
+            s2 = new ListNode(0, l1);
+        }
+
+        result.next = s1.next;
+        while (s1.next != null) {
+            int sum = 0;
+            if (s2.next != null) {
+                sum = s1.next.val + s2.next.val;
+                s2.next = s2.next.next;
+            } else {
+                sum = s1.next.val;
+            }
+            if (sum >= 10) {
+                s1.next.val = sum - 10;
+                if (s1.next.next != null) {
+                    s1.next.next.val += 1;
+                } else {
+                    s1.next.next = new ListNode(1, null);
+                }
+            } else {
+                s1.next.val = sum;
+            }
+
+            s1.next = s1.next.next;
+
+
+        }
+        return result.next;
+
+    }
+
 }
+
 
 class ListNode {
     int val;
