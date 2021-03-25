@@ -6,10 +6,10 @@ import java.util.Arrays;
 public class MyMathematics {
 
     public static void main(String[] args) {
-        System.out.println(threeConsecutiveOdds(new int[]{1, 1}));
-        System.out.println(threeConsecutiveOdds(new int[]{1, 2, 2}));
-        System.out.println(threeConsecutiveOdds(new int[]{1, 3, 5, 4, 5}));
-        System.out.println(threeConsecutiveOdds(new int[]{0, 2, 3, 2, 4, 5, 7, 9}));
+        System.out.println(isUgly(0));
+        System.out.println(isUgly(2));
+        System.out.println(isUgly(1024));
+        System.out.println(isUgly(14));
     }
 
     public static int[] findErrorNums(int[] nums) {
@@ -30,6 +30,7 @@ public class MyMathematics {
     /**
      * 连续三个奇数
      * 实习生，进一步输出这个三个连续的奇数
+     *
      * @param arr
      * @return
      */
@@ -50,6 +51,52 @@ public class MyMathematics {
 
         }
         return false;
+
+
     }
 
+    /**
+     * 丑数，数字 2 3 5 乘积
+     *
+     * @param n
+     * @return
+     */
+    public static boolean isUgly(int n) {
+        boolean r = false;
+        if(n==0){
+            return r;
+        }
+        //1.偶数
+        if (n % 2 == 0) {
+            n = n / 2;
+            if (n == 1) {
+                r = true;
+            } else {
+                return isUgly(n);
+            }
+        }
+        //2.奇数 3的倍数
+        else if (n % 3 == 0) {
+            n = n / 3;
+            if (n == 1) {
+                r = true;
+            } else {
+                return isUgly(n);
+            }
+
+        } else if (n % 5 == 0) {
+            n = n / 5;
+            if (n == 1) {
+                r = true;
+            } else {
+                return isUgly(n);
+            }
+
+        }
+        if (n == 1) {
+            r = true;
+        }
+        return r;
+
+    }
 }
