@@ -31,6 +31,8 @@ public class beautySum {
     /**
      * 计算美丽数
      *
+     * 使用 int[26] 表示字符串出现次数
+     *
      * @param s
      * @return
      */
