@@ -14,13 +14,13 @@ public class MathArray {
         int a[] = {1, 1, 1, 2, 3, 10, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 7, 8, 9, 10, 11, 12, 13, 14};
         int b[] = {2, 1, 2, 2, 3, 1, 0, 0, 9, 5, 5, 5, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 3};
         int c[] = {1, 3, 2, 2, 10, 4, 2, 3, 5, 9};
-        int d[] = {1, 3, 3, 10, 4, 2, 3, 5};
+        int d[] = {1, 2, 3, 1,2,3};
 
 
         System.out.println(findLengthOfShortestSubarray(a));
         System.out.println(findLengthOfShortestSubarray(b));
         System.out.println(findLengthOfShortestSubarray(c));
-        System.out.println(findLengthOfShortestSubarray(d));
+        System.out.println(containsNearbyDuplicate(d, 2));
 
     }
 
@@ -85,5 +85,18 @@ public class MathArray {
 
         return r;
     }
+
+    public static boolean containsNearbyDuplicate(int[] nums, int k) {
+        for (int i = 0; i < nums.length; i++) {
+            int j = i+1;
+            for (; j - i <= k&&j<nums.length; j++) {
+                if (nums[j] == nums[i]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
 }
