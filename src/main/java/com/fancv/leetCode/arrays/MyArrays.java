@@ -1,15 +1,13 @@
 package com.fancv.leetCode.arrays;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 public class MyArrays {
     public static void main(String[] args) {
-        int[] rains = {2, 1, 3, 5, 4, 6, 7};
-        int[] b = {3, 2, 1};
-        int[] c = { 1, 25, 35, 68, 66, 90};
-        System.out.println(getWinner(c, 3000));
+        int[] rains = {1, 1, 1, 2, 2, 3, 1, 4, 6, 7};
+        int[] b = {-1, 1, 2, 2};
+        int[] c = {1, 2, 1, 1, 2, 2, 3, 3, 3};
+        System.out.println(subsetsWithDup(b));
     }
 
     /**
@@ -92,4 +90,58 @@ public class MyArrays {
         return winner;
 
     }
+
+    /**
+     * 1.计算数组所有不重复的子集
+     * 输入：nums = [1,1,1,1,2]
+     * 输出：[[],[1],[1,1],[1,1,1],[1,1,1,1],[1,1,1,1,2]]
+     * 输入：nums = [1,1,2,2]
+     * 输出：[[],[1],[1,1],[1,1,2],[1,1,2,2],[1,2][1,2,2][2,2][2]]
+     * <p>
+     * 反思，
+     * 1.计算子集的算法不对，遗漏很多子集
+     * 2.去重算法不对
+     * <p>
+     * nums=[-1,1,1,2]
+     * 子集 [-1] [-1,1],[-1,1,1][-1,1,1,2][-1,1][-1,1,2][1][1,1][1,1,2][1,2][2]
+     *
+     * @param nums
+     * @return
+     */
+    public static List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+        int len = nums.length;
+        List<Integer> list = new ArrayList<>();
+        /**
+         * 1.外层循环 2的len 次方
+         * C 0/4  + C 1/4 +C2/4+C3/4 +C4/4
+         * 1 + 4+ 6+ 4+1=16
+         *
+         */
+        for (int i = 0; i < (1 << len); ++i) {
+            list.clear();
+            /**
+             * 2.内层循环j<len
+             *
+             */
+            boolean tag = true;
+            for (int j = 0; j < len; ++j) {
+                if ((i & (1 << j)) != 0) {
+                    if (j > 0 && (1 << (j - 1) & i) == 0 && nums[j] == nums[j - 1]) {
+                        tag = false;
+                        break;
+                    }
+                    list.add(nums[j]);
+                }
+            }
+            if (tag) {
+                result.add(new ArrayList<>(list));
+            }
+
+        }
+        return result;
+
+    }
+
 }
