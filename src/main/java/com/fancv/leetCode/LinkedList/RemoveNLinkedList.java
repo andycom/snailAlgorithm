@@ -8,16 +8,16 @@ package com.fancv.leetCode.LinkedList;
 public class RemoveNLinkedList {
 
     public static void main(String[] args) {
-        ListNode a = new ListNode(9, null);
-        ListNode b = new ListNode(9, a);
-        ListNode c = new ListNode(9, null);
-        ListNode d = new ListNode(9, c);
-        ListNode e = new ListNode(9, d);
+        ListNode a = new ListNode(12, null);
+        ListNode b = new ListNode(5, null);
+        ListNode c = new ListNode(4, null);
+        ListNode d = new ListNode(3, c);
+        ListNode e = new ListNode(1, d);
 
         /*removeNthFromEnd(e, 5);
         System.out.println("结束");*/
 
-        addTwoNumbers(e, b);
+        mergeTwoLists( b,e);
     }
 
     public static ListNode removeNthFromEnd(ListNode head, int n) {
@@ -113,6 +113,69 @@ public class RemoveNLinkedList {
         return result.next;
 
     }
+
+    /**
+     * 合并两个有序链表
+     *
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+
+        //头节点
+        ListNode head1 = null;
+        //新节点尾部节点
+        ListNode head2 = null;
+        //遍历节点
+        ListNode sail = null;
+        /**
+         * 链表有空的情况
+         */
+        if (l1 == null && l2 != null) {
+            return l2;
+        }
+        if (l2 == null && l1 != null) {
+            return l1;
+        }
+        if (l1 == null && l2 == null) {
+            return l1;
+        }
+/**
+ *选择l1遍历
+ */
+
+        boolean tail = false;
+        if (l1.val >= l2.val) {
+            head1 = l2;
+            head2 = l1;
+            sail = l1;
+            tail = true;
+        } else {
+            head1 = l1;
+            head2 = l2;
+            sail = l2;
+        }
+
+        while (head1 != null && head2 != null) {
+            if (head1.next != null && head1.next.val <= sail.val) {
+                head1 = head1.next;
+            } else {
+                sail = head1.next;
+                head1.next = head2;
+                head1 = head1.next;
+                head2 = sail;
+            }
+        }
+
+        if (tail) {
+            return l2;
+        } else {
+            return l1;
+        }
+
+    }
+
 
 }
 

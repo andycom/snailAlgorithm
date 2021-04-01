@@ -1,16 +1,21 @@
 package com.fancv.leetCode.arrays;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 public class MyArrays {
     public static void main(String[] args) {
-        int[] rains = {1, 0, 2, 0, 3, 0, 2, 0, 0, 0, 1, 2, 3};
-        System.out.println(Arrays.toString(avoidFlood(rains)));
+        int[] rains = {1, 1, 1, 2, 2, 3, 1, 4, 6, 7};
+        int[] b = {-1, 1, 2, 2};
+        int[] c = {1, 2, 1, 1, 2, 2, 3, 3, 3};
+        System.out.println(subsetsWithDup(b));
     }
 
+    /**
+     * 避免洪水
+     *
+     * @param rains
+     * @return
+     */
     public static int[] avoidFlood(int[] rains) {
         int ans[] = new int[rains.length];
         Map<Integer, Integer> r = new HashMap<>();
@@ -43,5 +48,121 @@ public class MyArrays {
             }
         }
         return ans;
+    }
+
+    /**
+     * 获取获胜者
+     * <p>
+     * 1.假设 winner 从 index 0 开始
+     * 2.比较之后 j>i+1 是否符合条件
+     * 4.若比较过程中  j< arr.lenght-1 计算循环值，每次计算
+     * 5.如果  循环一轮之后 无论k 多大 均返回 arr[i] 值
+     *
+     * @param arr
+     * @param k
+     * @return
+     */
+    public static int getWinner(int[] arr, int k) {
+        int winner = 0;
+        int tempk = 0;
+        for (int i = 0; i < arr.length; i++) {
+            winner = arr[i];
+            for (int j = i + 1; j < 2 * arr.length; j++) {
+                if (j >= arr.length) {
+                    j = j - arr.length;
+                }
+                if (i == j) {
+                    continue;
+                }
+                if (arr[j] < winner) {
+                    tempk++;
+                } else {
+                    winner = arr[j];
+                    tempk = 1;
+                }
+                if (tempk == k || tempk >= arr.length - 1) {
+                    return winner;
+                }
+
+            }
+
+        }
+        return winner;
+
+    }
+
+    /**
+     * 1.计算数组所有不重复的子集
+     * 输入：nums = [1,1,1,1,2]
+     * 输出：[[],[1],[1,1],[1,1,1],[1,1,1,1],[1,1,1,1,2]]
+     * 输入：nums = [1,1,2,2]
+     * 输出：[[],[1],[1,1],[1,1,2],[1,1,2,2],[1,2][1,2,2][2,2][2]]
+     * <p>
+     * 反思，
+     * 1.计算子集的算法不对，遗漏很多子集
+     * 2.去重算法不对
+     * <p>
+     * nums=[-1,1,1,2]
+     * 子集 [-1] [-1,1],[-1,1,1][-1,1,1,2][-1,1][-1,1,2][1][1,1][1,1,2][1,2][2]
+     *
+     * @param nums
+     * @return
+     */
+    public static List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+        int len = nums.length;
+        List<Integer> list = new ArrayList<>();
+        /**
+         * 1.外层循环 2的len 次方
+         * C 0/4  + C 1/4 +C2/4+C3/4 +C4/4
+         * 1 + 4+ 6+ 4+1=16
+         *
+         */
+        for (int i = 0; i < (1 << len); ++i) {
+            list.clear();
+            /**
+             * 2.内层循环j<len
+             *
+             */
+            boolean tag = true;
+            for (int j = 0; j < len; ++j) {
+                if ((i & (1 << j)) != 0) {
+                    if (j > 0 && (1 << (j - 1) & i) == 0 && nums[j] == nums[j - 1]) {
+                        tag = false;
+                        break;
+                    }
+                    list.add(nums[j]);
+                }
+            }
+            if (tag) {
+                result.add(new ArrayList<>(list));
+            }
+
+        }
+        return result;
+
+    }
+
+}
+
+class Solution {
+    List<List<Integer>> result = new ArrayList<>();
+    public List<List<Integer>> subsets(int[] nums) {
+        List<Integer> temp = new ArrayList<>();
+        int len = nums.length;
+        // 1  外部循环2的len 次方循环
+        for (int loop = 0; loop < (1 << len); loop++) {
+            temp.clear();
+            // 内部循环 len
+            for (int j = 0; j < len; j++) {
+                //3 位运算判断是否子集
+                if ((loop & (1 << j)) != 0) {
+                    temp.add(nums[j]);
+                }
+            }
+            result.add(new ArrayList<>(temp));
+        }
+        return result;
     }
 }
