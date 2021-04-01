@@ -145,3 +145,24 @@ public class MyArrays {
     }
 
 }
+
+class Solution {
+    List<List<Integer>> result = new ArrayList<>();
+    public List<List<Integer>> subsets(int[] nums) {
+        List<Integer> temp = new ArrayList<>();
+        int len = nums.length;
+        // 1  外部循环2的len 次方循环
+        for (int loop = 0; loop < (1 << len); loop++) {
+            temp.clear();
+            // 内部循环 len
+            for (int j = 0; j < len; j++) {
+                //3 位运算判断是否子集
+                if ((loop & (1 << j)) != 0) {
+                    temp.add(nums[j]);
+                }
+            }
+            result.add(new ArrayList<>(temp));
+        }
+        return result;
+    }
+}
