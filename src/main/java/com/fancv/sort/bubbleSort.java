@@ -3,6 +3,8 @@ package com.fancv.sort;
 /**
  *冒泡排序
  *
+ * 双循环，每次最大的数据冒到最后边
+ * 复杂度 o(n2)
  * 外循环
  * 内循环
  *
@@ -11,7 +13,8 @@ public class bubbleSort {
 
     public static void main(String args[]) {
         System.out.println("冒泡排序");
-        int[] arr = {1, 9, 3, 2, 8, 4, 7};//创建数组
+
+        int[] arr = {91, 9, 3, 2, 8, 4, 7,4};//创建数组
         System.out.println("排序前");
         showArr(arr);//打印显示排序前
         //循环实现冒泡排序
@@ -24,6 +27,7 @@ public class bubbleSort {
                 }
 
             }
+            showArr(arr);
         }
         System.out.println("排序后");
         showArr(arr);
